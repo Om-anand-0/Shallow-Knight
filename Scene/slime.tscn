@@ -1,0 +1,65 @@
+[gd_scene load_steps=10 format=3 uid="uid://sio4y3gx8va5"]
+
+[ext_resource type="Script" path="res://Scripts/slime.gd" id="1_c05gv"]
+[ext_resource type="Texture2D" uid="uid://bo6cu7lkxj87o" path="res://Assets/sprites/slime_green.png" id="1_windn"]
+[ext_resource type="PackedScene" uid="uid://djpii17mq73x5" path="res://Scene/killzone.tscn" id="2_uva07"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_33aoy"]
+atlas = ExtResource("1_windn")
+region = Rect2(0, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_d7srv"]
+atlas = ExtResource("1_windn")
+region = Rect2(24, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ofk8"]
+atlas = ExtResource("1_windn")
+region = Rect2(48, 24, 24, 24)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_s45hr"]
+atlas = ExtResource("1_windn")
+region = Rect2(72, 24, 24, 24)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_xkhhg"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_33aoy")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_d7srv")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ofk8")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_s45hr")
+}],
+"loop": true,
+"name": &"default",
+"speed": 10.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_8odc0"]
+size = Vector2(14, 15)
+
+[node name="slime" type="Node2D"]
+script = ExtResource("1_c05gv")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_xkhhg")
+autoplay = "default"
+
+[node name="killzone" parent="." instance=ExtResource("2_uva07")]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="killzone"]
+position = Vector2(0, 4.5)
+shape = SubResource("RectangleShape2D_8odc0")
+
+[node name="RayCastRight" type="RayCast2D" parent="killzone/CollisionShape2D"]
+position = Vector2(0, 0.5)
+target_position = Vector2(10, 0.5)
+
+[node name="RayCastLeft" type="RayCast2D" parent="killzone/CollisionShape2D"]
+position = Vector2(0, 0.5)
+target_position = Vector2(-10, 0.5)
